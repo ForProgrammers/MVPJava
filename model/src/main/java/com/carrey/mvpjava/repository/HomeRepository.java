@@ -12,6 +12,6 @@ import retrofit2.http.GET;
  */
 
 public interface HomeRepository {
-    @GET
+    @GET("data/Android/10/1")
     Observable<HomeEntity> getHome();
 }

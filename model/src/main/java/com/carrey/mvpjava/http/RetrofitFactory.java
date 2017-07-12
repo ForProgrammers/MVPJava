@@ -1,5 +1,8 @@
 package com.carrey.mvpjava.http;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -13,17 +16,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitFactory {
 
-    public static String BASE_URL = "http://gateway.marvel.com/";
+    public static String BASE_URL = "http://gank.io/api/";
 
     private Retrofit mRetrofit;
 
     public static final RetrofitFactory INSTANCE = new RetrofitFactory();
 
     private RetrofitFactory() {
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.HttpLogger());
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new SignInterceptor())
-                .addInterceptor(new HttpLoggingInterceptor())
-//                .connectTimeout()
+                .addInterceptor(httpLoggingInterceptor)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectionPool(new ConnectionPool(5, 1, TimeUnit.MINUTES))
                 .build();
 
         mRetrofit = new Retrofit.Builder()

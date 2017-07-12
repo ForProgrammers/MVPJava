@@ -7,6 +7,4 @@ package com.carrey.mvpjava.entity;
  */
 
 public class HomeEntity {
-    public String name;
-    public String value;
 }
