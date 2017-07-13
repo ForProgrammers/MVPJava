@@ -2,8 +2,11 @@ package com.carrey.mvpjava.repository;
 
 import com.carrey.mvpjava.entity.HomeEntity;
 
+import java.util.Map;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.QueryMap;
 
 /**
  * 作者： carrey
@@ -13,5 +16,5 @@ import retrofit2.http.GET;
 
 public interface HomeRepository {
     @GET("data/Android/10/1")
-    Observable<HomeEntity> getHome();
+    Observable<HomeEntity> getHome(@QueryMap Map<String,String> map);
 }
